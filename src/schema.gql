@@ -1,0 +1,68 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+interface BaseSchema {
+  createdAt: DateTime
+  id: ID!
+  updatedAt: DateTime
+}
+
+type BetListSchema {
+  count: Int!
+  data: [BetSchema!]!
+}
+
+type BetSchema implements BaseSchema {
+  betAmount: Float!
+  chance: Float!
+  createdAt: DateTime
+  id: ID!
+  payout: Float!
+  updatedAt: DateTime
+  user: UserSchema!
+  userId: Int!
+  win: Float!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  createBet(betAmount: Int!, userId: Int!): BetSchema!
+}
+
+type Query {
+  getBestBetPerUser(limit: Int = 20, page: Int = 1, sort: [SortInput!] = []): BetListSchema!
+  getBet(id: Int!): BetSchema
+  getBetList(limit: Int = 20, page: Int = 1, sort: [SortInput!] = []): BetListSchema!
+  getUser(id: Int!): UserSchema!
+  getUserList(limit: Int = 20, page: Int = 1, sort: [SortInput!] = []): UserListSchema!
+}
+
+input SortInput {
+  field: String!
+  order: SortOrder!
+}
+
+"""ASC or DESC"""
+enum SortOrder {
+  ASC
+  DESC
+}
+
+type UserListSchema {
+  count: Int!
+  data: [UserSchema!]!
+}
+
+type UserSchema implements BaseSchema {
+  balance: Float!
+  bets: [BetSchema!]!
+  createdAt: DateTime
+  id: ID!
+  name: String!
+  updatedAt: DateTime
+}
